@@ -1,4 +1,4 @@
-person_id,name,date_of_birth,address,role,hospital_id
+doctor_id,name,date_of_birth,address,role,hospital_id
 1,Dr. Joshua Wright,1971-10-11,"291 Davis Drives Lake Sueside, MI 33513",Doctor,22
 2,Dr. Ashley Hooper,1991-12-19,"34614 Trevino Camp Andrewside, VT 84933",Doctor,23
 3,Dr. Michael Robinson,1968-09-24,"12118 Fields Skyway Suite 213 West Carolynport, RI 59587",Doctor,2
