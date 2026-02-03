@@ -1,0 +1,121 @@
+# Create tables 
+
+Create table hospitals
+   hospital_id : autonumber
+   hospital_name : string
+   hospital_address : string
+   size : integer
+   type : string
+   accreditation_status : string
+Set primary key as hospital_id
+
+Create table doctors
+   doctor_id : autonumber
+   doctor_name : string
+   doctor_dob : date
+   doctor_address : string
+   doctor_role : string
+   hospital_id : integer
+Set primary key as doctor_id 
+Set foreign key as hospital_id from hospitals 
+
+Create table patients
+   patient_id : autonumber 
+   patient_name : string 
+   patient_dob : date 
+   patient_address : string
+   patient_role : string
+   doctor_id : integer 
+Set primary key as patient_id
+Set foreign key as doctor_id from doctors 
+
+Create table prescriptions
+   prescription_id : autonumber
+   patient_id : integer
+   doctor_id : integer
+   medication : string 
+   prescription_date : date 
+Set primary key as prescription_id 
+Set foreign key as doctor_id from doctors
+Set foreign key as patient_id from patients 
+
+# Load data from files to corresponding tables 
+Load hospitals.csv into hospitals
+   hospital_id <- hospital_id
+   hospital_name <- name
+   hospital_address <- address
+   size <- size 
+   type <- type 
+   accreditation_status <- accreditation_status 
+
+Load doctors.csv into doctors 
+   doctor_id <- doctor_id
+   doctor_name <- name
+   doctor_dob <- date_of_birth
+   doctor_address <- address 
+   doctor_role <- role 
+   hospital_id <- hospital_id 
+
+Load patients.csv into patients
+   patient_id <- patient_id
+   patient_name <- name
+   patient_dob <- date_of_birth
+   patient_address <- address
+   patient_role <- role 
+   doctor_id <- doctor_id 
+
+Load prescriptions.csv into prescriptions
+   prescription_id <- prescription_id
+   patient_id <- patient_id 
+   doctor_id <- doctor_id 
+   medication <- medication
+   prescription_date <- prescription_date 
+
+# Queries to extract various data 
+
+# Query 1. Print a list of all doctors based at a particular hospital
+# Example query based on hospital_name
+Create view hospitals_doctors as
+   Join doctors and hospitals on hospital_id
+search_term <- user input (hospital_name)
+Select all rows from hospitals_doctors where hospital_name = search_term 
+Print results 
+
+# Query 2. Print a list of all prescriptions for a particular patient, ordered by the prescription date
+# Example query based on patient name
+Create view patients_prescriptions as 
+   Join patients and prescriptions on patient_id 
+search_term <- user input (patient_name)
+Select all rows from patients_prescriptions where patient_name = search_term
+Order by prescription_date
+Print results 
+
+# Query 3. Print a list of all prescriptions that a particular doctor has prescribed
+# Example query based on doctor name 
+Create view doctors_prescriptions as
+   Join doctors and prescriptions on doctor_id 
+search_term <- user input (doctor_name) 
+Select all rows from doctors_prescriptions where doctor_name = search_term
+Print results
+
+
+# Query 4. Add a new patient to the database, including being registered with one of the doctors
+Insert row to patients
+	patient_name <- user input 
+	patient_dob <- user input 
+	patient_address <- user input
+	patient_role <- user input
+	doctor_id <- user input
+
+# Query 5. Identify which doctor has made the most prescriptions
+Create view doctors_prescriptions as
+   Join doctors and prescriptions on doctor_id 
+Count the number of rows grouped by doctor_name from doctors_prescriptions
+Result as prescription_count 
+Order rows by prescription_count 
+
+# Query 6. Print a list of all doctors at the hospital with biggest size (number of beds)
+Create view hospitals_doctors as
+   Join doctors and hospitals on hospital_id
+Order rows by size 
+Print rows of biggest hospital
